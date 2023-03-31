@@ -7,7 +7,7 @@ Please fill out all of the following sections to help us grade your submission:
 
 ## Student (to be completed individually)
 
-* First Last, x500@umn.edu
+* Isabel Dahl, dahl1199@umn.edu
 
 ## Link to Site
 
