@@ -56,6 +56,20 @@ export async function addTodoItem(authToken, userId, name, done, createdOn) {
     return await result.json();
 }
 
+//mark todo item as done
+export async function markTodoDone(authToken, userId, name, done, createdOn, id){
+    const result = await fetch(backend_base + "/todos/" + id, {
+        'method':'PUT',
+        'headers': {'Authorization': 'Bearer ' + authToken,
+        'Content-Type': 'application/json'},
+        'body': JSON.stringify({userId,
+            name,
+            done,
+            createdOn})
+    })
+    return await result.json();
+}
+
 //This function is a comparison function to be used for json sorting, the following sites were used as reference/example
 //https://www.coderstool.com/json-sort
 //https://stackabuse.com/compare-two-dates-in-javascript/

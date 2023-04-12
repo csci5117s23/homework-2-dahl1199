@@ -42,7 +42,7 @@ export default function ToDoList(props){
         const createdOn = new Date()
         const newTodo = await addTodoItem(token, userId, newName, done, createdOn);
         setNewName("");
-        setTodos(todos.concat(newTodo));
+        setTodos([newTodo].concat(todos));
     }
 
 
@@ -51,7 +51,8 @@ export default function ToDoList(props){
     } else {
     const todoListItems = todos.map((element) => {
         return <li>
-            <ToDoItem key={element.id} id={element.id} name={element.name} done={element.done}/>
+            <ToDoItem todo={element}/>
+            {/* <ToDoItem key={element.id} id={element.id} name={element.name} done={element.done}/> */}
         </li>
     });
         //done page, no add new task input
