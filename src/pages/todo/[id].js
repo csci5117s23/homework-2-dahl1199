@@ -1,4 +1,4 @@
-import ToDoList from './ToDoList'
+import ToDoItem from '@/components/ToDoItem'
 import Link from 'next/link'
 import Head from 'next/head'
 
