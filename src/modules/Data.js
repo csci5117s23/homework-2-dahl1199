@@ -58,8 +58,8 @@ export async function addTodoItem(authToken, userId, name, done, createdOn) {
 //https://www.coderstool.com/json-sort
 //https://stackabuse.com/compare-two-dates-in-javascript/
 function dateCompare(a,b){
-    const dateA = new Date(a);
-    const dateB = new Date(b);
+    const dateA = new Date(a["createdOn"]);
+    const dateB = new Date(b["createdOn"]);
     if(dateA > dateB){
         return 1;
     }
