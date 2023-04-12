@@ -32,7 +32,9 @@ export async function getUndoneTodoItems(authToken, userId) {
       'headers': {'Authorization':'Bearer ' + authToken,}
     })
     if (result.ok) {
+        //get the json object
         const todos = await result.json();
+        //sort the todo items by the date they were created on using dateCompare
         todos.sort(dateCompare);
         return todos;
     } else {
@@ -61,10 +63,10 @@ function dateCompare(a,b){
     const dateA = new Date(a["createdOn"]);
     const dateB = new Date(b["createdOn"]);
     if(dateA > dateB){
-        return 1;
+        return -1;
     }
     if(dateB > dateA){
-        return -1;
+        return 1;
     } 
     return 0;
 }
