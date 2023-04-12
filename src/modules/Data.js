@@ -1,8 +1,8 @@
 const backend_base = process.env.NEXT_PUBLIC_BACKEND_BASE_URL;
 
 //get all todo items for this user
-export async function getTodoItems(authToken) {
-  const result = await fetch(backend_base + "/todos", {
+export async function getTodoItems(authToken, userId) {
+  const result = await fetch(backend_base + "/todos?userId=" + userId, {
     'method':'GET',
     'headers': {'Authorization':'Bearer ' + authToken,}
   })
@@ -11,7 +11,7 @@ export async function getTodoItems(authToken) {
 
 //get all done todo items for this user
 export async function getDoneTodoItems(authToken, userId) {
-    const result = await fetch(backend_base + "/todos", {
+    const result = await fetch(backend_base + "/todos?userId=" + userId + "&done=true", {
       'method':'GET',
       'headers': {'Authorization':'Bearer ' + authToken,}
     })
@@ -20,7 +20,7 @@ export async function getDoneTodoItems(authToken, userId) {
 
   //get all undone todo items for this user
 export async function getUndoneTodoItems(authToken, userId) {
-    const result = await fetch(backend_base + "/todos", {
+    const result = await fetch(backend_base + "/todos?userId=" + userId + "&done=false", {
       'method':'GET',
       'headers': {'Authorization':'Bearer ' + authToken,}
     })
