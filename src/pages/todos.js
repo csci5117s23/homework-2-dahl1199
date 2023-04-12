@@ -1,8 +1,11 @@
-import ToDoList from './ToDoList'
+import ToDoList from '../components/ToDoList'
+
 import Link from 'next/link'
 import Head from 'next/head'
 
-export default function Todo() {
+export default function Todos() {
+
+
     return (
       <>
         <Head>

@@ -8,8 +8,9 @@ import {crudlify} from 'codehooks-crudlify'
 import { date, object, string } from 'yup';
 
 const todoYup = object({
+    userId: string().required(),
     name: string().required(),
-    done: boolean().required(),
+    done: boolean().default(false),
     createdOn: date().default(() => new Date()),
 })
 
