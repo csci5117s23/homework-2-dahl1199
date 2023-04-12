@@ -54,22 +54,32 @@ export default function ToDoList(props){
             <ToDoItem key={element.id} id={element.id} name={element.name} done={element.done}/>
         </li>
     });
-
-        return (
-            <>
-            <ol>
-                
-                <input
-                placeholder="add a todo"
-                value={newName}
-                onChange={(e) => setNewName(e.target.value)}
-                onKeyDown = {(e)=>{if (e.key === 'Enter'){add()}}}
-                ></input>
-                <button onClick={add}>add</button>
-                {todoListItems}
-            </ol>
-            </>
-        );
+        //done page, no add new task input
+        if(props.done){
+            return (
+                <>
+                <ol>
+                    {todoListItems}
+                </ol>
+                </>
+            );
+        //todo page, include add new task input
+        } else {
+            return (
+                <>
+                <ol>
+                    <input
+                    placeholder="add a todo"
+                    value={newName}
+                    onChange={(e) => setNewName(e.target.value)}
+                    onKeyDown = {(e)=>{if (e.key === 'Enter'){add()}}}
+                    ></input>
+                    <button onClick={add}>add</button>
+                    {todoListItems}
+                </ol>
+                </>
+            );
+        }
     }
 
     // return(
