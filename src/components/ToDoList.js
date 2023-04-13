@@ -51,7 +51,7 @@ export default function ToDoList(props){
     } else {
     const todoListItems = todos.map((element) => {
         return <li>
-            <ToDoItem todo={element}/>
+            <ToDoItem key={element._id} todo={element}/>
             {/* <ToDoItem key={element.id} id={element.id} name={element.name} done={element.done}/> */}
         </li>
     });

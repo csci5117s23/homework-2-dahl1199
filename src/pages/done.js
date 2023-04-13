@@ -12,7 +12,7 @@ export default function Todo() {
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <Link href="/">root page</Link>
-        <Link href="/todo">todo</Link>
+        <Link href="/todos">todo</Link>
         <ToDoList done={true}/>
       </>
     )

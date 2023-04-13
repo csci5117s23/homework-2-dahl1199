@@ -42,6 +42,15 @@ export async function getUndoneTodoItems(authToken, userId) {
     }
   }
 
+  //get one todo item with the given id
+  export async function getTodoItemById(authToken, id) {
+    const result = await fetch(backend_base + "/todos?_id=" + id, {
+      'method':'GET',
+      'headers': {'Authorization':'Bearer ' + authToken,}
+    })
+    return await result.json();
+  }
+
   // add a new todo item
 export async function addTodoItem(authToken, userId, name, done, createdOn) {
     const result = await fetch(backend_base+"/todos",{
@@ -57,7 +66,7 @@ export async function addTodoItem(authToken, userId, name, done, createdOn) {
 }
 
 //mark todo item as done
-export async function markTodoDone(authToken, userId, name, done, createdOn, id){
+export async function updateTodo(authToken, userId, name, done, createdOn, id){
     const result = await fetch(backend_base + "/todos/" + id, {
         'method':'PUT',
         'headers': {'Authorization': 'Bearer ' + authToken,

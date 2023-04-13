@@ -1,7 +1,8 @@
 import { useState} from "react"
 import ToggleButton from 'react-bootstrap/ToggleButton';
-import { markTodoDone } from "@/modules/Data";
+import { updateTodo } from "@/modules/Data";
 import { useAuth } from "@clerk/nextjs";
+import Link from 'next/link'
 
 export default function ToDoItem(props){
     const { isLoaded, userId, sessionId, getToken } = useAuth();
@@ -18,24 +19,25 @@ export default function ToDoItem(props){
 
     async function updateDone(){
         const token = await getToken({ template: "codehooks" });
-        await markTodoDone(token, userId, name, done, createdOn, id);
+        await updateTodo(token, userId, name, done, createdOn, id);
     }
 
     return(
         <div className='taskItem' id={props.todo._id}>
+            <Link href={`/todo/${id}`}>
+                <ToggleButton
+                    id="toggleDone"
+                    type="checkbox"
+                    checked={done}
+                    value="1"
+                    onChange={toggleDone}
+                    >
+                </ToggleButton>
             
-            <ToggleButton
-                id="toggleDone"
-                type="checkbox"
-                checked={done}
-                value="1"
-                onChange={toggleDone}
-                >
-            </ToggleButton>
-            
-            <span>
-                {props.todo.name}
-            </span>
+                <span>
+                    {props.todo.name}
+                </span>
+            </Link>
         </div>
     )
 }
