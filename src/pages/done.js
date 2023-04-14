@@ -1,8 +1,20 @@
 import ToDoList from '../components/ToDoList'
-import Link from 'next/link'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
+import { useAuth } from '@clerk/nextjs'
+import NavBar from '../components/NavBar'
+import { useEffect } from "react"
 
-export default function Todo() {
+export default function Done() {
+  const { isLoaded, userId, sessionId, getToken } = useAuth();
+  const router = useRouter()
+
+  useEffect(() => {
+    if(!userId){
+      router.push('/')
+    }
+  });
+
     return (
       <>
         <Head>
@@ -11,9 +23,8 @@ export default function Todo() {
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <link rel="icon" href="/favicon.ico" />
         </Head>
-        <Link href="/">root page</Link>
-        <Link href="/todos">todo</Link>
+        <NavBar/>
         <ToDoList done={true}/>
       </>
-    )
+    ) 
   }

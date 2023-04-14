@@ -1,16 +1,11 @@
 import { useState, useEffect } from "react"
 import ToDoItem from './ToDoItem'
 import { useAuth } from "@clerk/nextjs";
+
+import Loading from '../components/Loading'
 import { getUndoneTodoItems, getDoneTodoItems, addTodoItem } from "@/modules/Data";
 
 export default function ToDoList(props){
-    const items = [
-        {id:1, name:"stuff", done:false},
-        {id:2, name:"isabel", done:false},
-        {id:3, name:"applies", done:false},
-        {id:4, name:"kneecaps", done:true},
-        {id:5, name:"orange juice", done:false},
-    ]
     const [todos, setTodos] = useState([]);
     const [loading, setLoading] = useState(true);
     const { isLoaded, userId, sessionId, getToken } = useAuth();
@@ -47,7 +42,7 @@ export default function ToDoList(props){
 
 
     if (loading) {
-    return <span> loading... </span>;
+    return <Loading/>
     } else {
     const todoListItems = todos.map((element) => {
         return <li>
@@ -59,7 +54,7 @@ export default function ToDoList(props){
         if(props.done){
             return (
                 <>
-                <ol>
+                <ol className="todoList-ol">
                     {todoListItems}
                 </ol>
                 </>
@@ -68,14 +63,17 @@ export default function ToDoList(props){
         } else {
             return (
                 <>
-                <ol>
-                    <input
-                    placeholder="add a todo"
-                    value={newName}
-                    onChange={(e) => setNewName(e.target.value)}
-                    onKeyDown = {(e)=>{if (e.key === 'Enter'){add()}}}
-                    ></input>
-                    <button onClick={add}>add</button>
+                <ol className="todoList-ol">
+                    <div className="todoList-add-container">
+                        <input
+                        class="todoList-add-input"
+                        placeholder="Add a new task!"
+                        value={newName}
+                        onChange={(e) => setNewName(e.target.value)}
+                        onKeyDown = {(e)=>{if (e.key === 'Enter'){add()}}}
+                        ></input>
+                        <button className="todoList-add-button" onClick={add}>Add +</button>
+                    </div>
                     {todoListItems}
                 </ol>
                 </>

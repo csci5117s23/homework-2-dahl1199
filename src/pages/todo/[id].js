@@ -1,6 +1,8 @@
 import ToDoItem from '@/components/ToDoItem'
 import { useState, useEffect } from "react"
-import Head from 'next/head'
+
+import NavBar from '../../components/NavBar'
+import Loading from '../../components/Loading'
 import { useRouter } from "next/router";
 import { useAuth } from "@clerk/nextjs";
 import { updateTodo, getTodoItemById } from "@/modules/Data";
@@ -12,25 +14,76 @@ export default function Todo() {
     const [todo, setTodo] = useState([]);
     const [loading, setLoading] = useState(true);
     const { isLoaded, userId, sessionId, getToken } = useAuth();
+    const [newName, setNewName] = useState("")
+    const [done, setDone] = useState(false);
+
+    useEffect(() => {
+      if(!userId){
+        router.push('/')
+      }
+    });
 
     useEffect(() => {
       async function process() {
         if (userId) {
           const token = await getToken({ template: "codehooks" });
-          setTodo(await getTodoItemById(token, id));
+          const thisTodo = await getTodoItemById(token, id);
+          if(thisTodo){
+            setTodo(thisTodo);
+            setNewName(thisTodo[0].name);
+            setDone(thisTodo[0].done);
+          }
+          
           setLoading(false);
-        }
+        } 
       }
       process();
     }, [isLoaded]);
 
+    async function edit() {
+      const token = await getToken({ template: "codehooks" });
+      const createdOn = new Date()
+      const newTodo = await updateTodo(token, userId, newName, done, createdOn, id);
+    }
 
+    async function markDone() {
+      setDone(!done);
+    }
 
     if (loading) {
-      return <span> loading... </span>;
+      return <>
+        <NavBar/>
+        <Loading/>
+      </>
+      } else if (done) {
+        return <>
+          <NavBar/>
+          <div className="todoId-edit-container">
+            <textarea
+            class="todoId-edit-input"
+            value={newName}
+            onChange={(e) => setNewName(e.target.value)}
+            onKeyDown = {(e)=>{if (e.key === 'Enter'){edit()}}}
+            ></textarea>
+            <button className="todoId-save-button" onClick={edit}>Save</button>
+            <button className="todoId-undone-button" onClick={markDone}>Mark as Unfinished</button>
+
+          </div>
+        </>
       } else {
         return <>
-          <ToDoItem key={id} todo={todo[0]}/>
+          <NavBar/>
+          <div className="todoId-edit-container">
+            <textarea
+            class="todoId-edit-input"
+            value={newName}
+            onChange={(e) => setNewName(e.target.value)}
+            onKeyDown = {(e)=>{if (e.key === 'Enter'){edit()}}}
+            ></textarea>
+            <button className="todoId-save-button" onClick={edit}>Save</button>
+            <button className="todoId-done-button" onClick={markDone}>Mark as Done</button>
+
+          </div>
         </>
       }
   }
