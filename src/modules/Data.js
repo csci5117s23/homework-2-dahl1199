@@ -76,6 +76,11 @@ export async function updateTodo(authToken, userId, name, done, createdOn, id){
             done,
             createdOn})
     })
+    
+    console.log(JSON.stringify({userId,
+      name,
+      done,
+      createdOn}))
     return await result.json();
 }
 

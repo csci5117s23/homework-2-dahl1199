@@ -16,6 +16,7 @@ export default function Todo() {
     const { isLoaded, userId, sessionId, getToken } = useAuth();
     const [newName, setNewName] = useState("")
     const [done, setDone] = useState(false);
+    const [createdOn, setCreatedOn] = useState(null)
 
     useEffect(() => {
       if(!userId){
@@ -32,6 +33,7 @@ export default function Todo() {
             setTodo(thisTodo);
             setNewName(thisTodo[0].name);
             setDone(thisTodo[0].done);
+            setCreatedOn(thisTodo[0].createdOn);
           }
           
           setLoading(false);
@@ -48,7 +50,13 @@ export default function Todo() {
 
     async function markDone() {
       setDone(!done);
+      updateDone();
     }
+
+    async function updateDone(){
+      const token = await getToken({ template: "codehooks" });
+      await updateTodo(token, userId, newName, !done, createdOn, id);
+  }
 
     if (loading) {
       return <>

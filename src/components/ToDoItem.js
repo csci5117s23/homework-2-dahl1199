@@ -24,7 +24,7 @@ export default function ToDoItem(props){
 
     async function updateDone(){
         const token = await getToken({ template: "codehooks" });
-        await updateTodo(token, userId, name, done, createdOn, id);
+        await updateTodo(token, userId, name, !done, createdOn, id);
     }
 
     if(done){
